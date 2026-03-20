@@ -130,9 +130,9 @@ function Dashboard() {
       {/* Main content */}
       <div className="dashboard-body">
         <Calendar />
-        <TipsSidebar />
       </div>
 
+      <TipsSidebar />
       <Chatbot />
 
       {showIntegrations && (

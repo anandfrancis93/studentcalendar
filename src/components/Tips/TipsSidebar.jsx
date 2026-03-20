@@ -7,17 +7,16 @@ export default function TipsSidebar() {
   const { state, dispatch } = useAppContext();
   const { events, onboardingData, dismissedTips } = state;
   const [tips, setTips] = useState([]);
-  const [collapsed, setCollapsed] = useState(false);
+  const [open, setOpen] = useState(false);
 
   function refreshTips() {
     const generated = generateTips(events, onboardingData);
-    const filtered = generated.filter((t, i) => !dismissedTips.includes(t.text));
+    const filtered = generated.filter((t) => !dismissedTips.includes(t.text));
     setTips(filtered);
   }
 
   useEffect(() => {
     refreshTips();
-    // Refresh tips every 5 minutes
     const interval = setInterval(refreshTips, 5 * 60 * 1000);
     return () => clearInterval(interval);
   }, [events, onboardingData, dismissedTips]);
@@ -27,20 +26,29 @@ export default function TipsSidebar() {
   }
 
   return (
-    <aside className={`tips-sidebar ${collapsed ? 'collapsed' : ''}`}>
-      <div className="tips-header">
-        <h3>
-          💡 <span>Tips & Suggestions</span>
-        </h3>
-        <button className="tips-toggle" onClick={() => setCollapsed(!collapsed)} title={collapsed ? 'Expand' : 'Collapse'}>
-          {collapsed ? '→' : '←'}
-        </button>
-      </div>
+    <>
+      {/* Floating Action Button */}
+      <button
+        className={`tips-fab ${open ? 'active' : ''}`}
+        onClick={() => setOpen(!open)}
+        title="Tips & Suggestions"
+      >
+        {open ? '✕' : '💡'}
+        {!open && tips.length > 0 && <span className="tips-badge">{tips.length}</span>}
+      </button>
 
-      {!collapsed && (
-        <>
-          <div className="tips-list">
-            {tips.slice(0, 8).map((tip, i) => (
+      {/* Popup Panel */}
+      {open && (
+        <div className="tips-panel glass-card">
+          <div className="tips-header">
+            <h3>💡 Tips & Suggestions</h3>
+            <button className="tips-refresh-btn" onClick={refreshTips} title="Refresh">
+              🔄
+            </button>
+          </div>
+
+          <div className="tips-scroll">
+            {tips.slice(0, 10).map((tip, i) => (
               <div className="tip-card" key={i}>
                 <div className="tip-content">
                   <span className="tip-icon">{tip.icon}</span>
@@ -54,7 +62,7 @@ export default function TipsSidebar() {
               </div>
             ))}
             {tips.length === 0 && (
-              <div className="tip-card">
+              <div className="tip-card tip-empty">
                 <div className="tip-content">
                   <span className="tip-icon">✨</span>
                   <span className="tip-text">All caught up! Check back later for new suggestions.</span>
@@ -62,11 +70,8 @@ export default function TipsSidebar() {
               </div>
             )}
           </div>
-          <button className="tips-refresh" onClick={refreshTips}>
-            🔄 Refresh Tips
-          </button>
-        </>
+        </div>
       )}
-    </aside>
+    </>
   );
 }
