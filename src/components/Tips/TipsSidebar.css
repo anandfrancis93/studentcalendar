@@ -1,5 +1,5 @@
 /* ═══════════════════════════════════════════════
-   TIPS — FLOATING BUTTON + POPUP
+   TIPS — FLOATING BUTTON + CAROUSEL POPUP
    ═══════════════════════════════════════════════ */
 
 /* ── FAB ──────────────────────────────────────── */
@@ -51,13 +51,12 @@
   padding: 0 5px;
 }
 
-/* ── Popup Panel ──────────────────────────────── */
+/* ── Panel ────────────────────────────────────── */
 .tips-panel {
   position: fixed;
   bottom: 164px;
   right: 28px;
-  width: 360px;
-  max-height: 480px;
+  width: 340px;
   display: flex;
   flex-direction: column;
   z-index: 899;
@@ -71,7 +70,6 @@
   justify-content: space-between;
   padding: var(--space-md) var(--space-lg);
   border-bottom: 1px solid var(--border-color);
-  flex-shrink: 0;
 }
 
 .tips-header h3 {
@@ -79,39 +77,15 @@
   font-weight: 700;
 }
 
-.tips-refresh-btn {
-  width: 32px;
-  height: 32px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: var(--radius-sm);
-  font-size: var(--font-sm);
-  transition: all var(--transition-fast);
+.tips-counter {
+  font-size: var(--font-xs);
+  color: var(--text-tertiary);
+  font-weight: 500;
 }
 
-.tips-refresh-btn:hover {
-  background: var(--bg-glass-hover);
-  transform: rotate(90deg);
-}
-
-/* ── Scrollable list ──────────────────────────── */
-.tips-scroll {
-  overflow-y: auto;
-  padding: var(--space-md);
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-sm);
-  flex: 1;
-}
-
-.tips-scroll::-webkit-scrollbar {
-  width: 4px;
-}
-
-.tips-scroll::-webkit-scrollbar-thumb {
-  background: var(--border-color-hover);
-  border-radius: 4px;
+/* ── Single tip view ──────────────────────────── */
+.tips-body {
+  padding: var(--space-md) var(--space-lg);
 }
 
 .tip-card {
@@ -119,17 +93,8 @@
   background: var(--bg-card);
   border: 1px solid var(--border-color);
   border-radius: var(--radius-md);
-  transition: all var(--transition-fast);
-  animation: fadeInUp 0.3s ease both;
   position: relative;
-}
-
-.tip-card:nth-child(2) { animation-delay: 0.05s; }
-.tip-card:nth-child(3) { animation-delay: 0.1s; }
-.tip-card:nth-child(4) { animation-delay: 0.15s; }
-
-.tip-card:hover {
-  border-color: var(--border-color-hover);
+  animation: fadeIn 0.2s ease;
 }
 
 .tip-card::before {
@@ -151,6 +116,7 @@
   display: flex;
   gap: var(--space-sm);
   align-items: flex-start;
+  padding-right: var(--space-md);
 }
 
 .tip-icon {
@@ -162,15 +128,15 @@
 .tip-text {
   font-size: var(--font-sm);
   color: var(--text-secondary);
-  line-height: 1.5;
+  line-height: 1.6;
 }
 
 .tip-dismiss {
   position: absolute;
   top: var(--space-xs);
   right: var(--space-xs);
-  width: 20px;
-  height: 20px;
+  width: 22px;
+  height: 22px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -190,14 +156,35 @@
   color: var(--text-primary);
 }
 
+/* ── Navigation arrows ────────────────────────── */
+.tips-nav {
+  display: flex;
+  justify-content: space-between;
+  padding: var(--space-sm) var(--space-lg) var(--space-md);
+}
+
+.tips-arrow {
+  padding: var(--space-xs) var(--space-md);
+  font-size: var(--font-sm);
+  font-weight: 500;
+  color: var(--text-secondary);
+  border-radius: var(--radius-full);
+  border: 1px solid var(--border-color);
+  transition: all var(--transition-fast);
+}
+
+.tips-arrow:hover {
+  color: var(--accent-primary);
+  border-color: var(--accent-primary);
+  background: rgba(129, 140, 248, 0.08);
+}
+
 /* ── Responsive ───────────────────────────────── */
 @media (max-width: 640px) {
   .tips-panel {
     right: 12px;
     left: 12px;
     width: auto;
-    bottom: 164px;
-    max-height: 60vh;
   }
 
   .tips-fab {

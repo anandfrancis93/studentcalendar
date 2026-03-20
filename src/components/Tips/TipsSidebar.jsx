@@ -8,11 +8,13 @@ export default function TipsSidebar() {
   const { events, onboardingData, dismissedTips } = state;
   const [tips, setTips] = useState([]);
   const [open, setOpen] = useState(false);
+  const [index, setIndex] = useState(0);
 
   function refreshTips() {
     const generated = generateTips(events, onboardingData);
     const filtered = generated.filter((t) => !dismissedTips.includes(t.text));
     setTips(filtered);
+    setIndex(0);
   }
 
   useEffect(() => {
@@ -23,11 +25,15 @@ export default function TipsSidebar() {
 
   function dismiss(tipText) {
     dispatch({ type: 'DISMISS_TIP', payload: tipText });
+    // Move to next tip (or wrap)
+    if (tips.length <= 1) return;
+    if (index >= tips.length - 1) setIndex(0);
   }
+
+  const tip = tips[index] || null;
 
   return (
     <>
-      {/* Floating Action Button */}
       <button
         className={`tips-fab ${open ? 'active' : ''}`}
         onClick={() => setOpen(!open)}
@@ -37,19 +43,18 @@ export default function TipsSidebar() {
         {!open && tips.length > 0 && <span className="tips-badge">{tips.length}</span>}
       </button>
 
-      {/* Popup Panel */}
       {open && (
         <div className="tips-panel glass-card">
           <div className="tips-header">
             <h3>💡 Tips & Suggestions</h3>
-            <button className="tips-refresh-btn" onClick={refreshTips} title="Refresh">
-              🔄
-            </button>
+            {tips.length > 0 && (
+              <span className="tips-counter">{index + 1} / {tips.length}</span>
+            )}
           </div>
 
-          <div className="tips-scroll">
-            {tips.slice(0, 10).map((tip, i) => (
-              <div className="tip-card" key={i}>
+          <div className="tips-body">
+            {tip ? (
+              <div className="tip-card" key={index}>
                 <div className="tip-content">
                   <span className="tip-icon">{tip.icon}</span>
                   <span className="tip-text">{tip.text}</span>
@@ -57,11 +62,10 @@ export default function TipsSidebar() {
                 <button
                   className="tip-dismiss"
                   onClick={() => dismiss(tip.text)}
-                  title="Dismiss"
+                  title="Dismiss this tip"
                 >✕</button>
               </div>
-            ))}
-            {tips.length === 0 && (
+            ) : (
               <div className="tip-card tip-empty">
                 <div className="tip-content">
                   <span className="tip-icon">✨</span>
@@ -70,6 +74,23 @@ export default function TipsSidebar() {
               </div>
             )}
           </div>
+
+          {tips.length > 1 && (
+            <div className="tips-nav">
+              <button
+                className="tips-arrow"
+                onClick={() => setIndex(i => (i - 1 + tips.length) % tips.length)}
+              >
+                ← Prev
+              </button>
+              <button
+                className="tips-arrow"
+                onClick={() => setIndex(i => (i + 1) % tips.length)}
+              >
+                Next →
+              </button>
+            </div>
+          )}
         </div>
       )}
     </>
