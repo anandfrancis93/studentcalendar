@@ -1,0 +1,341 @@
+/* ═══════════════════════════════════════════════
+   ONBOARDING WIZARD styles
+   ═══════════════════════════════════════════════ */
+
+.onboarding-overlay {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--bg-primary);
+  z-index: 1000;
+  overflow-y: auto;
+  padding: var(--space-xl);
+}
+
+.onboarding-container {
+  width: 100%;
+  max-width: 620px;
+  animation: fadeInUp 0.6s ease both;
+}
+
+.onboarding-header {
+  text-align: center;
+  margin-bottom: var(--space-2xl);
+}
+
+.onboarding-logo {
+  font-size: var(--font-3xl);
+  font-weight: 800;
+  background: var(--gradient-primary);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin-bottom: var(--space-sm);
+}
+
+.onboarding-subtitle {
+  color: var(--text-secondary);
+  font-size: var(--font-base);
+}
+
+/* Progress Bar */
+.progress-bar-container {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  margin-bottom: var(--space-2xl);
+}
+
+.progress-track {
+  flex: 1;
+  height: 6px;
+  background: var(--bg-glass);
+  border-radius: var(--radius-full);
+  overflow: hidden;
+}
+
+.progress-fill {
+  height: 100%;
+  background: var(--gradient-primary);
+  border-radius: var(--radius-full);
+  transition: width 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.progress-label {
+  font-size: var(--font-xs);
+  color: var(--text-secondary);
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+/* Step Card */
+.step-card {
+  padding: var(--space-2xl);
+  animation: fadeInUp 0.4s ease both;
+}
+
+.step-number {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  background: var(--gradient-primary);
+  border-radius: var(--radius-full);
+  font-size: var(--font-sm);
+  font-weight: 700;
+  color: #fff;
+  margin-bottom: var(--space-md);
+}
+
+.step-title {
+  font-size: var(--font-xl);
+  font-weight: 700;
+  margin-bottom: var(--space-xs);
+}
+
+.step-description {
+  color: var(--text-secondary);
+  font-size: var(--font-sm);
+  margin-bottom: var(--space-xl);
+}
+
+/* Form Fields */
+.form-group {
+  margin-bottom: var(--space-lg);
+}
+
+.form-label {
+  display: block;
+  font-size: var(--font-sm);
+  font-weight: 500;
+  color: var(--text-secondary);
+  margin-bottom: var(--space-xs);
+}
+
+.form-input {
+  width: 100%;
+  padding: var(--space-sm) var(--space-md);
+  font-size: var(--font-base);
+}
+
+.form-input::placeholder {
+  color: var(--text-tertiary);
+}
+
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-md);
+}
+
+/* Chip Select */
+.chip-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-sm);
+}
+
+.chip {
+  padding: var(--space-xs) var(--space-md);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-full);
+  font-size: var(--font-sm);
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  user-select: none;
+}
+
+.chip:hover {
+  border-color: var(--border-color-hover);
+  color: var(--text-primary);
+  background: var(--bg-glass-hover);
+}
+
+.chip.active {
+  background: var(--gradient-primary);
+  border-color: transparent;
+  color: #fff;
+  font-weight: 500;
+}
+
+/* Day Toggles */
+.day-toggle-group {
+  display: flex;
+  gap: var(--space-xs);
+}
+
+.day-toggle {
+  width: 42px;
+  height: 42px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  font-size: var(--font-sm);
+  font-weight: 500;
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.day-toggle:hover {
+  border-color: var(--border-color-hover);
+  background: var(--bg-glass-hover);
+}
+
+.day-toggle.active {
+  background: var(--accent-primary);
+  border-color: var(--accent-primary);
+  color: #fff;
+}
+
+/* Navigation Buttons */
+.step-actions {
+  display: flex;
+  justify-content: space-between;
+  margin-top: var(--space-2xl);
+}
+
+/* Class Entry */
+.class-entries {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+}
+
+.class-entry {
+  padding: var(--space-md);
+  background: var(--bg-glass);
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border-color);
+}
+
+.class-entry-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: var(--space-sm);
+}
+
+.class-entry-header h4 {
+  font-size: var(--font-sm);
+  font-weight: 600;
+}
+
+.remove-class-btn {
+  font-size: var(--font-xs);
+  color: var(--accent-danger);
+  padding: 2px 8px;
+  border-radius: var(--radius-sm);
+}
+
+.remove-class-btn:hover {
+  background: rgba(248, 113, 113, 0.1);
+}
+
+.add-class-btn {
+  width: 100%;
+  padding: var(--space-sm);
+  border: 1px dashed var(--border-color);
+  border-radius: var(--radius-md);
+  color: var(--text-secondary);
+  font-size: var(--font-sm);
+  transition: all var(--transition-fast);
+  margin-top: var(--space-sm);
+}
+
+.add-class-btn:hover {
+  border-color: var(--accent-primary);
+  color: var(--accent-primary);
+  background: rgba(129, 140, 248, 0.05);
+}
+
+/* Goal Checkboxes */
+.goal-option {
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+  padding: var(--space-md);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  margin-bottom: var(--space-sm);
+}
+
+.goal-option:hover {
+  border-color: var(--border-color-hover);
+  background: var(--bg-glass-hover);
+}
+
+.goal-option.active {
+  border-color: var(--accent-primary);
+  background: rgba(129, 140, 248, 0.08);
+}
+
+.goal-icon {
+  font-size: var(--font-xl);
+}
+
+.goal-info h4 {
+  font-size: var(--font-base);
+  font-weight: 600;
+}
+
+.goal-info p {
+  font-size: var(--font-xs);
+  color: var(--text-secondary);
+}
+
+/* Welcome Screen (Final) */
+.welcome-screen {
+  text-align: center;
+  padding: var(--space-3xl) var(--space-xl);
+}
+
+.welcome-emoji {
+  font-size: 4rem;
+  margin-bottom: var(--space-lg);
+  animation: float 3s ease-in-out infinite;
+}
+
+.welcome-screen h2 {
+  font-size: var(--font-2xl);
+  font-weight: 700;
+  margin-bottom: var(--space-md);
+}
+
+.welcome-screen p {
+  color: var(--text-secondary);
+  font-size: var(--font-base);
+  max-width: 400px;
+  margin: 0 auto var(--space-xl);
+}
+
+@media (max-width: 640px) {
+  .onboarding-overlay {
+    padding: var(--space-md);
+  }
+
+  .step-card {
+    padding: var(--space-lg);
+  }
+
+  .form-row {
+    grid-template-columns: 1fr;
+  }
+
+  .day-toggle-group {
+    flex-wrap: wrap;
+  }
+
+  .day-toggle {
+    width: 38px;
+    height: 38px;
+  }
+}
