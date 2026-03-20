@@ -10,9 +10,9 @@ const initialState = {
   activeView: 'month',
   selectedDate: new Date().toISOString().split('T')[0],
   integrations: {
-    google: { connected: false, lastSync: null },
+    google: { connected: false, lastSync: null, clientId: '' },
     apple: { connected: false, lastSync: null },
-    canvas: { connected: false, lastSync: null, apiToken: '' },
+    canvas: { connected: false, lastSync: null, feedUrl: '' },
   },
   dismissedTips: [],
 };
@@ -48,12 +48,29 @@ function reducer(state, action) {
           }
         }
       };
-    case 'DISCONNECT_INTEGRATION':
+    case 'DISCONNECT_INTEGRATION': {
+      const svc = action.payload;
+      const prev = state.integrations[svc] || {};
       return {
         ...state,
         integrations: {
           ...state.integrations,
-          [action.payload]: { connected: false, lastSync: null }
+          [svc]: { ...prev, connected: false, lastSync: null }
+        },
+        events: state.events.filter(e => e.source !== svc),
+      };
+    }
+    case 'REMOVE_EVENTS_BY_SOURCE':
+      return { ...state, events: state.events.filter(e => e.source !== action.payload) };
+    case 'SET_INTEGRATION_CONFIG':
+      return {
+        ...state,
+        integrations: {
+          ...state.integrations,
+          [action.payload.service]: {
+            ...state.integrations[action.payload.service],
+            ...action.payload.config,
+          }
         }
       };
     case 'DISMISS_TIP':
