@@ -36,11 +36,17 @@ function Dashboard() {
   const [syncing, setSyncing] = useState(false);
   const [lastAutoSync, setLastAutoSync] = useState(null);
   const syncInProgress = useRef(false);
+  const integrationsRef = useRef(state.integrations);
+
+  // Keep the ref current without triggering effect re-runs
+  useEffect(() => {
+    integrationsRef.current = state.integrations;
+  }, [state.integrations]);
 
   const autoSync = useCallback(async () => {
     if (syncInProgress.current) return;
 
-    const connectedFeeds = Object.entries(state.integrations)
+    const connectedFeeds = Object.entries(integrationsRef.current)
       .filter(([, v]) => v.connected && v.feedUrl)
       .map(([key, v]) => ({ key, feedUrl: v.feedUrl }));
 
@@ -62,22 +68,19 @@ function Dashboard() {
           });
         }
       } catch {
-        // Silent fail on auto-sync — don't interrupt the user
+        // Silent fail on auto-sync
       }
     }
 
     setSyncing(false);
     setLastAutoSync(new Date());
     syncInProgress.current = false;
-  }, [state.integrations, dispatch]);
+  }, [dispatch]); // Only depends on dispatch (stable)
 
-  // Auto-sync on mount + every 15 minutes
+  // Auto-sync: once on mount + every 15 minutes
   useEffect(() => {
-    // Initial sync after 3 seconds (let the app settle)
     const initialTimeout = setTimeout(autoSync, 3000);
-
     const interval = setInterval(autoSync, SYNC_INTERVAL_MS);
-
     return () => {
       clearTimeout(initialTimeout);
       clearInterval(interval);
