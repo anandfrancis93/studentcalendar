@@ -10,8 +10,8 @@ const initialState = {
   activeView: 'month',
   selectedDate: new Date().toISOString().split('T')[0],
   integrations: {
-    google: { connected: false, lastSync: null, clientId: '' },
-    apple: { connected: false, lastSync: null },
+    google: { connected: false, lastSync: null, feedUrl: '' },
+    apple: { connected: false, lastSync: null, feedUrl: '' },
     canvas: { connected: false, lastSync: null, feedUrl: '' },
   },
   dismissedTips: [],

@@ -123,6 +123,10 @@
   background: linear-gradient(135deg, #E13F29, #C12E1E);
 }
 
+.integration-logo.file-logo {
+  background: linear-gradient(135deg, #64748b, #475569);
+}
+
 .integration-info {
   flex: 1;
   min-width: 0;
